@@ -3,20 +3,19 @@ from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from storerestapi.models import stores
+from storerestapi.schemas import StoresSchema
 
 blp = Blueprint("stores", __name__, description="Operations for stores")
 
 @blp.route("/store")
 class StoreList(MethodView):
+    @blp.response(200, StoresSchema(many=True))
     def get(self):
-        return {"stores" : list(stores.values())}
+        return stores.values()
 
-    def post(self):
-        store_data = request.get_json()
-
-        # return if JSON is incomplete
-        if "name" not in store_data:
-            abort(400, message="Bad request. name is not in JSON payload.")
+    @blp.arguments(StoresSchema)
+    @blp.response(200, StoresSchema)
+    def post(self, store_data):
         # Return if store exsits.
         for store in stores.values():
             if store_data['name'] == store['name']:
@@ -25,13 +24,14 @@ class StoreList(MethodView):
         store_id = uuid.uuid4().hex # Creates a UUID unique key, will be done by Postgres later.
         new_store = {**store_data, "id" : store_id}
         stores[store_id] = new_store
-        return new_store, 201
+        return new_store
 
 @blp.route("/store/<string:store_id>")
 class StoreGeneral(MethodView):
+    @blp.response(200, StoresSchema)
     def get(self, store_id):
         try:
-            return stores[store_id], 201
+            return stores[store_id]
         except KeyError:
             abort(404, message="Could not find store.")
 
