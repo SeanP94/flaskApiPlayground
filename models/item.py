@@ -1,5 +1,4 @@
-from storerestapi import db
-
+from models import db
 
 class ItemModel(db.Model):
     __tablename__ = "items"

@@ -1,4 +1,4 @@
-from storerestapi import app
+from storerestapi import create_app
 
 if __name__ == 'main':
-    app.run()
+    create_app()

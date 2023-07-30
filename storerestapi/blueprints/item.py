@@ -2,8 +2,9 @@ import uuid
 from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from storerestapi.models import items
 from storerestapi.schemas import ItemSchema, ItemUpdateSchema
+
+from models import items
 
 blp = Blueprint("items", __name__, description="Operations for items")
 
