@@ -42,5 +42,3 @@ class StoreGeneral(MethodView):
             return {"message" : "Store deleted."}, 201
         except KeyError:
             abort(404, message=f"Item id {store_id} not found.")
-
-
