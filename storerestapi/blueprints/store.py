@@ -1,5 +1,3 @@
-import uuid 
-from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from storerestapi.schemas import StoresSchema
@@ -7,10 +5,10 @@ from storerestapi.schemas import StoresSchema
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from models import db, StoreModel
 
-# from models import stores
 
 blp = Blueprint("stores", __name__, description="Operations for stores")
 
+# Gets all stores or creates one
 @blp.route("/store")
 class StoreList(MethodView):
     @blp.response(200, StoresSchema(many=True))
@@ -22,7 +20,6 @@ class StoreList(MethodView):
     def post(self, store_data):
         # Return if store exsits.
         store = StoreModel(**store_data)
-
         try:
             db.session.add(store)
             db.session.commit()
@@ -33,16 +30,13 @@ class StoreList(MethodView):
 
         return store
 
+# Operates directly on a store.
 @blp.route("/store/<string:store_id>")
 class StoreGeneral(MethodView):
     @blp.response(200, StoresSchema)
     def get(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
-        print("CUNT")
-        print(type(store))
-        print(store)
         return store, 200
-
 
     def delete(self, store_id):
         store = StoreModel.query.get_or_404(store_id)

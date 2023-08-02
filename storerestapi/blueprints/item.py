@@ -1,4 +1,3 @@
-from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from storerestapi.schemas import ItemSchema, ItemUpdateSchema
@@ -6,16 +5,14 @@ from storerestapi.schemas import ItemSchema, ItemUpdateSchema
 from sqlalchemy.exc import SQLAlchemyError
 
 from models import db, ItemModel
-#from models import items
-
 blp = Blueprint("items", __name__, description="Operations for items")
 
+# Gets list or adds an item
 @blp.route("/item")
 class ItemList(MethodView):
     @blp.response(200, ItemSchema(many=True))
     def get(self):
         return ItemModel.query.all()
-    
     
     @blp.arguments(ItemSchema)
     @blp.response(201, ItemSchema)
@@ -31,14 +28,12 @@ class ItemList(MethodView):
 
         return item
 
+# Operates directly on a specified item
 @blp.route("/item/<string:item_id>")
 class ItemGeneral(MethodView):
     blp.response(200, ItemSchema)
     def get(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
-        print("CUNT")
-        print(type(item))
-        print(item)
         return item
 
     def delete(self, item_id):

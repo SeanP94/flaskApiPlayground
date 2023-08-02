@@ -15,8 +15,6 @@ TODO:
 
 ---
 
-- SQLAlchemy
-
 - User Authentication with JWT
 
 - Sending Emails
