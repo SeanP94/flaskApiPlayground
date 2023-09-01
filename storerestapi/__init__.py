@@ -3,14 +3,12 @@ from flask import Flask
 from flask_smorest import Api
 from models import db
 
-import models
-
 from storerestapi.blueprints.item import blp as itemBlueprint
 from storerestapi.blueprints.store import blp as storeBlueprint
 
 
 def create_app(db_url=None):
-    
+    '''Initial Builder application'''
     app = Flask(__name__)
     # Help find errors
     app.config["PROPAGATE_EXCEPTIONS"] = True
