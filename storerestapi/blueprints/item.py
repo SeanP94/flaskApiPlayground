@@ -31,11 +31,15 @@ class ItemList(MethodView):
 # Operates directly on a specified item
 @blp.route("/item/<string:item_id>")
 class ItemGeneral(MethodView):
-    blp.response(200, ItemSchema)
+
+    @blp.response(200, ItemSchema)
     def get(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
+        print(1)
+        print(item)
         return item
 
+        abort(404, message="test")
     def delete(self, item_id):
         store = ItemModel.query.get_or_404(item_id)
         db.session.delete(store)
