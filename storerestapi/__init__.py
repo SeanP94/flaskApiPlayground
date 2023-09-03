@@ -5,6 +5,7 @@ from models import db
 
 from storerestapi.blueprints.item import blp as itemBlueprint
 from storerestapi.blueprints.store import blp as storeBlueprint
+from storerestapi.blueprints.tag import blp as tagBlueprint
 
 
 def create_app(db_url=None):
@@ -30,5 +31,5 @@ def create_app(db_url=None):
 
     api.register_blueprint(storeBlueprint)
     api.register_blueprint(itemBlueprint)
-    
+    api.register_blueprint(tagBlueprint)
     return app
