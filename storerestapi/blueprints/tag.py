@@ -10,7 +10,8 @@ blp = Blueprint("Tags", __name__, description="Operations for tags")
 
 @blp.route("/store/<string:store_id>/tag")
 class TagInStore(MethodView):
-    @blp.response(200, TagSchema)
+    @blp.response(200, TagSchema(many=True))
+    
     def get(self, store_id):
         stores = StoreModel.query.get_or_404(store_id)
         return stores.tags.all()
