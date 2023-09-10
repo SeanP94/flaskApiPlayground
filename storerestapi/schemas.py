@@ -27,6 +27,7 @@ class PlainTagSchema(Schema):
 class ItemSchema(PlainItemSchema):
     store_id = fields.Int(required=True, load_only=True)
     store = fields.Nested(PlainStoreSchema(), dump_only=True)
+    tags = fields.List(fields.Nested(PlainTagSchema()), dump_only=True)
 
 # Helps get all
 class StoreSchema(PlainStoreSchema):
@@ -36,6 +37,7 @@ class StoreSchema(PlainStoreSchema):
 class TagSchema(PlainTagSchema):
     store_id = fields.Int(required=True, load_only=True)
     store = fields.Nested(PlainStoreSchema(), dump_only=True)
+    items = fields.List(fields.Nested(PlainItemSchema()), dump_only=True)
 
 # Notice how these just include all, but dont force you to use them
 # So we can use this to either update or create new with put.
@@ -44,3 +46,7 @@ class ItemUpdateSchema(Schema):
     price = fields.Float()
     store_id = fields.Int()
 
+class TagAndItemSchema(Schema):
+    message = fields.Str()
+    item = fields.Nested(ItemSchema)
+    tag = fields.Nested(TagSchema)

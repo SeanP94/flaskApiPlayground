@@ -38,8 +38,7 @@ class ItemGeneral(MethodView):
         print(1)
         print(item)
         return item
-
-        abort(404, message="test")
+    
     def delete(self, item_id):
         store = ItemModel.query.get_or_404(item_id)
         db.session.delete(store)
