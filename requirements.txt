@@ -4,3 +4,4 @@ sqlalchemy
 flask-smorest
 marshmallow
 python-dotenv
+flask-jwt-extended
